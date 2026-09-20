@@ -1,0 +1,461 @@
+> Happy birthday randy
+Jujur aku bingung mau ngucapin apa, soalnya hampir 3 tahun hubungan kita itu masih kebayang jelas di aku. Setelah putus dan 1,5 tahun kita asing, aku kira rasa itu udah hilang, ternyata pas bisa ngobrol lagi sama kamu sekarang aku sadar kenapa dulu aku bisa sayang banget sama kamu. Aku nggak minta apa-apa kok di ulang tahun kamu ini, aku cuma mau kamu tau makasih pernah jadi bagian terindah di hidup aku selama itu. Selamat ulang tahun ya, semoga di umur kamu yang baru ini kamu makin bahagia, bahagia yang bener-bener bahagia. Walaupun sekarang bahagia kamu bukan sama aku lagi nggak apa-apa, aku ikut bahagia kalo kamu bahagia . Sehat-sehat terus ya randy💗<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Her Special Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{ --accent:#f2a7b8; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Cormorant Garamond', serif;
+    background:#1c1220;
+    color:#f4ecec;
+    overflow:hidden;
+    min-height:100vh;
+    position:relative;
+  }
+
+  /* ---------- background ---------- */
+  #bg{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(120,70,110,.55), transparent 60%),
+      radial-gradient(ellipse at 75% 75%, rgba(70,40,90,.55), transparent 60%),
+      linear-gradient(160deg,#241726 0%, #170f1c 55%, #0e0a14 100%);
+  }
+  canvas#stars{position:fixed; inset:0; z-index:1; pointer-events:none;}
+  .petals{position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden;}
+  .petal{ position:absolute; top:-5%; font-size:14px; opacity:.55; animation:fall linear infinite; color:var(--accent); }
+  @keyframes fall{ to{ transform:translateY(115vh) translateX(var(--drift,0px)) rotate(360deg); } }
+  .hearts-bg{ position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0; transition:opacity .8s; overflow:hidden; }
+  .hearts-bg.show{ opacity:1; }
+  .hbeat{ position:absolute; bottom:-10%; font-size:34px; color:rgba(255,182,193,.18); animation:rise linear infinite; }
+  @keyframes rise{ to{ transform:translateY(-120vh) scale(1.3); } }
+
+  /* ---------- layout ---------- */
+  .stage{
+    position:relative; z-index:2; height:100vh; width:100%;
+    display:flex; align-items:center; justify-content:center;
+    padding:28px 16px; overflow-y:auto;
+  }
+  .screen{ display:none; width:100%; max-width:600px; text-align:center; animation:riseIn .9s ease both; margin:auto; }
+  .screen.active{ display:block; }
+  @keyframes riseIn{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  .eyebrow{ font-family:'Cormorant Garamond', serif; letter-spacing:.28em; font-size:12px; color:var(--accent); text-shadow:0 0 12px rgba(242,167,184,.5); margin-bottom:14px; }
+  h1.display{ font-family:'Playfair Display', serif; font-style:italic; font-weight:600; font-size:clamp(28px,7vw,46px); line-height:1.15; text-shadow:0 0 30px rgba(242,167,184,.25); }
+  h1.display.solid{ font-style:normal; font-weight:700; }
+  .sub{ margin-top:10px; font-size:clamp(15px,3.6vw,18px); color:#e7d7dd; font-style:italic; }
+  .divider{ width:46px; height:1px; background:rgba(255,255,255,.35); margin:18px auto; }
+
+  /* ---------- countdown ---------- */
+  .timer-row{ display:flex; gap:clamp(8px,2.5vw,14px); justify-content:center; margin:34px 0 20px; flex-wrap:wrap; }
+  .timer-box{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:12px; min-width:64px; padding:12px 8px 8px; backdrop-filter:blur(6px); }
+  .timer-box .num{ font-family:'Playfair Display', serif; font-weight:700; font-size:clamp(20px,5.5vw,28px); }
+  .timer-box .lbl{ font-size:10.5px; letter-spacing:.18em; color:#cbb7c0; margin-top:4px; }
+  .hint{ font-size:15px; color:#e9c9d2; margin-top:6px; }
+  .pill{ display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding:10px 22px; border:1px solid rgba(255,255,255,.25); border-radius:999px; font-size:12px; letter-spacing:.14em; background:rgba(255,255,255,.03); cursor:pointer; transition:background .25s, transform .2s; }
+  .pill:hover{ background:rgba(255,255,255,.09); transform:translateY(-1px); }
+  .pill[disabled]{ opacity:.55; cursor:not-allowed; }
+  .tiny{ margin-top:10px; font-size:13px; color:#c9b6c0; }
+
+  /* ---------- gift box ---------- */
+  .gift-wrap{ margin:36px auto; width:140px; height:120px; cursor:pointer; }
+  .gift-svg{ width:100%; height:100%; filter:drop-shadow(0 0 22px rgba(242,167,184,.55)); animation:giftFloat 2.4s ease-in-out infinite; }
+  @keyframes giftFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+  .gift-wrap:active .gift-svg{ transform:scale(.94); }
+  .glow-txt{ font-size:14px; color:#f6d4dc; letter-spacing:.03em; }
+
+  /* ---------- love letter (Your Special Day) ---------- */
+  .polaroid{
+    position:absolute; width:86px; background:#fff; padding:6px 6px 16px; border-radius:4px;
+    box-shadow:0 8px 18px rgba(0,0,0,.45); z-index:1;
+  }
+  .polaroid img, .polaroid .ph-fill{ width:100%; height:76px; object-fit:cover; display:block; background:linear-gradient(135deg,#e9d3da,#cdb8c9); border-radius:2px; }
+  .deco-left1{ left:2%; top:10%; transform:rotate(-9deg); }
+  .deco-left2{ left:1%; top:42%; transform:rotate(6deg); }
+  .deco-left3{ left:4%; top:74%; transform:rotate(-4deg); }
+  .deco-right1{ right:2%; top:12%; transform:rotate(8deg); }
+  .deco-right2{ right:1%; top:44%; transform:rotate(-7deg); }
+  .deco-right3{ right:4%; top:75%; transform:rotate(5deg); }
+  @media (max-width:760px){ .polaroid{ display:none; } }
+
+  /* ---------- card (pesan / wishes) ---------- */
+  .card{ text-align:left; background:rgba(30,18,28,.55); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:24px 22px; margin-top:22px; backdrop-filter:blur(10px); max-height:52vh; overflow-y:auto; }
+  .card .greet{ font-weight:600; font-size:18px; }
+  .card p{ font-size:17px; line-height:1.65; color:#f0e4e9; margin-top:16px; }
+  .center-card{ text-align:center; }
+  .center-card .greet{ font-family:'Playfair Display',serif; font-style:italic; font-size:19px; }
+  .center-card p{ text-align:center; }
+  .heart-solo{ text-align:center; margin-top:14px; font-size:20px; }
+
+  /* ---------- our memories grid ---------- */
+  .logo-row{ display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin:10px 0 6px; }
+  .logo-badge{ background:#fff; padding:5px; border-radius:8px; box-shadow:0 6px 14px rgba(0,0,0,.4); }
+  .logo-badge img{ width:44px; height:44px; object-fit:contain; display:block; }
+  .logo-badge.l1{ transform:rotate(-6deg); }
+  .logo-badge.l2{ transform:rotate(6deg); }
+
+  .memories-grid{
+    display:grid; grid-template-columns:repeat(4, minmax(0,1fr));
+    gap:10px; margin-top:20px;
+  }
+  @media (max-width:600px){ .memories-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; } }
+  .mem-item{ background:#fff; padding:5px 5px 12px; border-radius:5px; box-shadow:0 6px 14px rgba(0,0,0,.4); }
+  .mem-item:nth-child(odd){ transform:rotate(-3deg); }
+  .mem-item:nth-child(even){ transform:rotate(3deg); }
+  .mem-item img{ width:100%; aspect-ratio:3/4; object-fit:cover; display:block; border-radius:2px; }
+  .mem-item .ph-fill{ width:100%; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; border-radius:2px; background:linear-gradient(135deg,#3a2a35,#241a26); color:#caa8b6; font-size:11px; }
+
+  /* ---------- video ---------- */
+  .video-wrap{ margin:22px auto 0; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.15); background:#000; max-width:300px; }
+  video{ width:100%; height:auto; display:block; max-height:60vh; }
+
+  /* ---------- final ---------- */
+  .final p{ margin-top:8px; font-style:italic; color:#e9d7de; font-size:17px; }
+  .final .forever{ margin-top:16px; font-size:19px; }
+
+  /* ---------- audio toggle ---------- */
+  #audio-toggle{
+    position:fixed; bottom:16px; right:16px; z-index:5;
+    width:42px; height:42px; border-radius:50%;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25);
+    display:none; align-items:center; justify-content:center;
+    font-size:18px; cursor:pointer; backdrop-filter:blur(6px);
+  }
+  #audio-toggle.show{ display:flex; }
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<canvas id="stars"></canvas>
+<div class="petals" id="petals"></div>
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- 🎵 GANTI src DI BAWAH DENGAN FILE LAGU KAMU (taruh di folder yang sama dengan file html ini) -->
+<audio id="bgm" src="lagu-kamu.mp3" loop preload="auto"></audio>
+<div id="audio-toggle" title="Mute/Unmute lagu">🔊</div>
+
+<div class="stage">
+
+  <!-- ============ 1. COUNTDOWN ============ -->
+  <section class="screen active" id="screen-countdown">
+    <div class="eyebrow">✦ MENGHITUNG HARI ✦</div>
+    <h1 class="display">Her Special Day<br>is Coming</h1>
+    <div class="sub">Semua yang indah sedang menunggu untukmu ❤</div>
+
+    <div class="timer-row">
+      <div class="timer-box"><div class="num" id="cd-days">00</div><div class="lbl">HARI</div></div>
+      <div class="timer-box"><div class="num" id="cd-hours">00</div><div class="lbl">JAM</div></div>
+      <div class="timer-box"><div class="num" id="cd-mins">00</div><div class="lbl">MENIT</div></div>
+      <div class="timer-box"><div class="num" id="cd-secs">00</div><div class="lbl">DETIK</div></div>
+    </div>
+
+    <div class="hint">⏳ Beberapa detik lagi... 💗</div>
+    <div class="pill" id="cd-pill" disabled>🔒 TUNGGU SAMPAI WAKTUNYA 🔒</div>
+    <div class="tiny" id="cd-remaining">Tersisa 00:02 lagi</div>
+  </section>
+
+  <!-- ============ 2. GIFT BOX ============ -->
+  <section class="screen" id="screen-gift">
+    <div class="eyebrow">✦ ADA SESUATU UNTUKMU ✦</div>
+    <div class="gift-wrap" id="gift-btn">
+      <svg class="gift-svg" viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="46" width="100" height="62" rx="6" fill="none" stroke="#f6d9e0" stroke-width="3"/>
+        <rect x="20" y="46" width="100" height="20" fill="none" stroke="#f6d9e0" stroke-width="3"/>
+        <rect x="62" y="46" width="16" height="62" fill="none" stroke="#f6d9e0" stroke-width="3"/>
+        <path d="M70 46 C 55 20, 30 30, 45 46 Z" fill="none" stroke="#f6d9e0" stroke-width="3"/>
+        <path d="M70 46 C 85 20, 110 30, 95 46 Z" fill="none" stroke="#f6d9e0" stroke-width="3"/>
+        <circle cx="70" cy="40" r="4" fill="#f6d9e0"/>
+      </svg>
+    </div>
+    <div class="glow-txt">✨ klik untuk membuka hadiahmu ✨</div>
+  </section>
+
+  <!-- ============ 3. YOUR SPECIAL DAY (love letter intro) ============ -->
+  <section class="screen" id="screen-letter" style="position:relative;">
+    <div class="polaroid deco-left1"><div class="ph-fill"></div></div>
+    <div class="polaroid deco-left2"><div class="ph-fill"></div></div>
+    <div class="polaroid deco-left3"><div class="ph-fill"></div></div>
+    <div class="polaroid deco-right1"><div class="ph-fill"></div></div>
+    <div class="polaroid deco-right2"><div class="ph-fill"></div></div>
+    <div class="polaroid deco-right3"><div class="ph-fill"></div></div>
+
+    <div class="eyebrow">✦ A LOVE LETTER FOR YOU ✦</div>
+    <h1 class="display solid" style="font-size:clamp(30px,8vw,48px);">Your Special Day</h1>
+    <div class="sub">Created with love, just for you</div>
+    <div class="divider"></div>
+    <div class="pill" id="btn-readletter">✦ READ MY LETTER ✦</div>
+  </section>
+
+  <!-- ============ 4. HAPPY BIRTHDAY MESSAGE ============ -->
+  <section class="screen" id="screen-message">
+    <h1 class="display">Happy Birthday</h1>
+    <div class="card" id="msg-card">
+      <div class="greet" id="typewriter"></div>
+    </div>
+    <div class="pill" id="btn-memories" style="display:none;">OUR MEMORIES →</div>
+  </section>
+
+  <!-- ============ 5. OUR MEMORIES (9 FOTO + 2 LOGO) ============ -->
+  <section class="screen" id="screen-memories">
+    <h1 class="display">Our Memories</h1>
+    <div class="sub" style="font-size:14px;">every moment captured in love</div>
+
+    <!-- 📸 GANTI src DI BAWAH INI DENGAN 7 FOTO KAMU (foto1.jpg s/d foto7.jpg, taruh di folder yang sama) -->
+    <div class="memories-grid">
+      <div class="mem-item"><img src="foto1.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto1.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto2.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto2.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto3.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto3.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto4.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto4.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto5.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto5.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto6.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto6.jpg&lt;/div&gt;'"></div>
+      <div class="mem-item"><img src="foto7.jpg" alt="" onerror="this.outerHTML='&lt;div class=&quot;ph-fill&quot;&gt;foto7.jpg&lt;/div&gt;'"></div>
+    </div>
+
+    <div class="pill" id="btn-watchvideo" style="margin-top:22px;">WATCH VIDEO →</div>
+  </section>
+
+  <!-- ============ 6. A MOMENT FOR YOU (VIDEO) ============ -->
+  <section class="screen" id="screen-video">
+    <h1 class="display">A Moment For You</h1>
+    <div class="sub" style="font-size:14px;">✦ a special video message ✦</div>
+    <div class="video-wrap">
+      <!-- 🎬 GANTI src DI BAWAH INI DENGAN VIDEO KAMU SENDIRI (video 1) -->
+      <video id="moment-video" controls poster="" src="video1.mp4">
+        Browser kamu tidak mendukung pemutaran video.
+      </video>
+    </div>
+    <div class="pill" id="btn-nextvideo" style="margin-top:20px;">NEXT VIDEO →</div>
+  </section>
+
+  <!-- ============ 6b. A MOMENT FOR YOU (VIDEO 2) ============ -->
+  <section class="screen" id="screen-video2">
+    <h1 class="display">One More Moment</h1>
+    <div class="sub" style="font-size:14px;">✦ a special video message ✦</div>
+    <div class="video-wrap">
+      <!-- 🎬 GANTI src DI BAWAH INI DENGAN VIDEO KAMU SENDIRI (video 2) -->
+      <video id="moment-video2" controls poster="" src="video2.mp4">
+        Browser kamu tidak mendukung pemutaran video.
+      </video>
+    </div>
+    <div class="pill" id="btn-wishes" style="margin-top:20px;">BIRTHDAY WISHES →</div>
+  </section>
+
+  <!-- ============ 7. BIRTHDAY WISHES ============ -->
+  <section class="screen" id="screen-wishes">
+    <div class="card center-card">
+      <h1 class="display" style="font-size:28px;">Birthday Wishes</h1>
+      <div class="greet">💗💗💗💗</div>
+      <p>Aku tuh sebenernya masih suka kangen sama kita yg duluu</p>
+      <p>Kangen yg tiap hari ngobrol, cerita random, ketawa2 gajelas, terus kadang berantem cuma gara2 hal kecil wkwkwk 😭😭</p>
+      <p>Aku gatau yaa kamu masih mikirin kita apa enggaa, tapi jujur aku masih suka berharap kita bisa balik lagi kayak dulu :(</p>
+      <p>Bukan berarti aku mau maksa kamu buat balik sekarang kokk, aku cuma... masih pengen ajaa suatu saat nanti kita bisa ketemu lagi di versi kita yg lebih baikk 🥺</p>
+      <p>Soalnya menurut aku, kita tuh sebenernya lucu bgt kalo bareng 😭 walaupun kadang bikin emosi jugaa sih hehe</p>
+      <p>Dan kalo kamu nanya aku masih sayang apa engga... yaaa masih dikit lahh... dikit banget... dikitnya segede bumi 😭👉🏻👈🏻</p>
+      <p>Aku cuma berharap kalo emang masih ada kesempatan buat kita, jangan sampe kesempatan itu lewat gitu ajaa.</p>
+      <p>Aku masih mau ngerasain punya kamu lagi, tapi kali ini semoga kita sama2 udah lebih ngerti cara ngejagain satu sama lain 🥹🤍</p>
+      <p>Jadiii kalo ternyata kamu juga masih punya harapan yg sama... yaudahh, kita tunggu ajaa yaa siapa tau semesta lagi nyusun sesuatu buat kita hehe :(</p>
+      <div class="heart-solo">💗</div>
+    </div>
+    <div class="pill" id="btn-onemore" style="margin-top:20px;">ONE MORE THING +</div>
+  </section>
+
+  <!-- ============ 8. FINAL / REPLAY ============ -->
+  <section class="screen final" id="screen-final">
+    <h1 class="display solid">Happy Birthday</h1>
+    <p>Thank you for being part of my life.</p>
+    <p>I hope this little gift can make your special day even more beautiful.</p>
+    <div class="forever">Forever yours. 💗</div>
+    <div class="pill" id="btn-replay" style="margin-top:22px;">↺ REPLAY FROM START</div>
+  </section>
+
+</div>
+
+<script>
+/* =====================================================================
+   ⚙️  GANTI TANGGAL TARGET DI SINI (format: "YYYY-MM-DDTHH:MM:SS")
+   ===================================================================== */
+const TARGET_DATE = new Date("2026-09-20T00:00:00");
+
+const FULL_MESSAGE = [
+  "Happy birthday randy 💗",
+  "",
+  "Jujur aku bingung mau ngucapin apa, soalnya hampir 3 tahun hubungan kita itu masih kebayang jelas di aku.",
+  "",
+  "Setelah putus dan 1,5 tahun kita asing, aku kira rasa itu udah hilang, ternyata pas bisa ngobrol lagi sama kamu sekarang aku sadar kenapa dulu aku bisa sayang banget sama kamu.",
+  "",
+  "Aku nggak minta apa-apa kok di ulang tahun kamu ini, aku cuma mau kamu tau makasih pernah jadi bagian terindah di hidup aku selama itu.",
+  "",
+  "Selamat ulang tahun ya, semoga di umur kamu yang baru ini kamu makin bahagia, bahagia yang bener-bener bahagia.",
+  "",
+  "Walaupun sekarang bahagia kamu bukan sama aku lagi nggak apa-apa, aku ikut bahagia kalo kamu bahagia.",
+  "",
+  "Sehat-sehat terus ya randy 💗"
+].join("\n");
+
+/* ---------------- musik latar (disiapkan duluan biar gak error) ---------------- */
+const bgm = document.getElementById('bgm');
+const audioToggle = document.getElementById('audio-toggle');
+let musicStarted = false;
+function tryPlayMusic(){
+  try{
+    if (musicStarted) return;
+    bgm.volume = 0.7;
+    const p = bgm.play();
+    if (p !== undefined){
+      p.then(()=>{ musicStarted = true; audioToggle.classList.add('show'); })
+       .catch(()=>{ /* diblokir browser, akan dicoba lagi saat user klik kado */ });
+    }
+  }catch(e){ /* file lagu belum ada / gagal load, abaikan biar gak ganggu alur */ }
+}
+audioToggle.addEventListener('click', ()=>{
+  bgm.muted = !bgm.muted;
+  audioToggle.textContent = bgm.muted ? '🔇' : '🔊';
+});
+bgm.addEventListener('play', ()=>audioToggle.classList.add('show'));
+
+/* ---------------- navigasi antar layar ---------------- */
+const heartsBg = document.getElementById('heartsBg');
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  heartsBg.classList.toggle('show', id !== 'screen-countdown');
+}
+document.getElementById('gift-btn').addEventListener('click', ()=>{ tryPlayMusic(); showScreen('screen-letter'); });
+document.getElementById('btn-readletter').addEventListener('click', ()=>{ showScreen('screen-message'); startTypewriter(); });
+document.getElementById('btn-memories').addEventListener('click', ()=>showScreen('screen-memories'));
+document.getElementById('btn-watchvideo').addEventListener('click', ()=>{
+  showScreen('screen-video');
+  const vid = document.getElementById('moment-video');
+  vid.currentTime = 0;
+  vid.play().catch(()=>{ /* kalau browser tetap blokir, tinggal pencet play manual */ });
+});
+document.getElementById('btn-nextvideo').addEventListener('click', ()=>{
+  document.getElementById('moment-video').pause();
+  showScreen('screen-video2');
+  const vid2 = document.getElementById('moment-video2');
+  vid2.currentTime = 0;
+  vid2.play().catch(()=>{ /* kalau browser tetap blokir, tinggal pencet play manual */ });
+});
+document.getElementById('btn-wishes').addEventListener('click', ()=>{
+  document.getElementById('moment-video2').pause();
+  showScreen('screen-wishes');
+});
+document.getElementById('btn-onemore').addEventListener('click', ()=>showScreen('screen-final'));
+document.getElementById('btn-replay').addEventListener('click', ()=>{ showScreen('screen-message'); startTypewriter(); });
+
+/* ---------------- countdown ---------------- */
+const pad = n => String(n).padStart(2,'0');
+function tickCountdown(){
+  const now = new Date();
+  let diff = TARGET_DATE - now;
+
+  if (diff <= 0){
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    document.getElementById('cd-remaining').textContent = "Waktunya sudah tiba! 🎉";
+    clearInterval(countdownInterval);
+    setTimeout(()=>{ showScreen('screen-gift'); }, 900);
+    tryPlayMusic();
+    return;
+  }
+
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff/(1000*60*60))%24);
+  const mins = Math.floor((diff/(1000*60))%60);
+  const secs = Math.floor((diff/1000)%60);
+
+  document.getElementById('cd-days').textContent = pad(days);
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-mins').textContent = pad(mins);
+  document.getElementById('cd-secs').textContent = pad(secs);
+  document.getElementById('cd-remaining').textContent = `Tersisa ${pad(hours)}:${pad(mins)} lagi`;
+}
+const countdownInterval = setInterval(tickCountdown, 1000);
+tickCountdown();
+
+/* ---------------- efek ketik (typewriter) ---------------- */
+let typeTimer = null;
+function startTypewriter(){
+  clearTimeout(typeTimer);
+  const el = document.getElementById('typewriter');
+  const btn = document.getElementById('btn-memories');
+  btn.style.display = 'none';
+  el.textContent = '';
+  el.style.whiteSpace = 'pre-line';
+  let i = 0;
+  const speed = 18;
+  (function type(){
+    if (i <= FULL_MESSAGE.length){
+      el.textContent = FULL_MESSAGE.slice(0, i);
+      i++;
+      typeTimer = setTimeout(type, speed);
+    } else {
+      btn.style.display = 'inline-flex';
+    }
+  })();
+}
+
+/* ---------------- background: bintang berkelip ---------------- */
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = Array.from({length: 90}, ()=>({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    r: Math.random()*1.4 + .3, a: Math.random(), speed: Math.random()*.02 + .005
+  }));
+}
+window.addEventListener('resize', resize);
+resize();
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    s.a += s.speed;
+    const op = Math.abs(Math.sin(s.a));
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(255,235,245,${op})`; ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+/* ---------------- kelopak/hati melayang (dekor global) ---------------- */
+const petalWrap = document.getElementById('petals');
+const petalChars = ['❀','♥','✦'];
+for(let i=0;i<16;i++){
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalChars[Math.floor(Math.random()*petalChars.length)];
+  p.style.left = Math.random()*100 + '%';
+  p.style.setProperty('--drift', (Math.random()*80-40)+'px');
+  p.style.animationDuration = (10 + Math.random()*10) + 's';
+  p.style.animationDelay = (Math.random()*10) + 's';
+  p.style.fontSize = (10 + Math.random()*10) + 'px';
+  petalWrap.appendChild(p);
+}
+
+/* ---------------- hati mengambang (dipakai di halaman love-letter dst) ---------------- */
+for(let i=0;i<14;i++){
+  const h = document.createElement('div');
+  h.className = 'hbeat';
+  h.textContent = '❤';
+  h.style.left = Math.random()*100 + '%';
+  h.style.animationDuration = (9 + Math.random()*8) + 's';
+  h.style.animationDelay = (Math.random()*9) + 's';
+  heartsBg.appendChild(h);
+}
+</script>
+</body>
+</html>
