@@ -321,6 +321,17 @@ audioToggle.addEventListener('click', ()=>{
 });
 bgm.addEventListener('play', ()=>audioToggle.classList.add('show'));
 
+/* "buka kunci" izin audio dari sentuhan/klik PERTAMA di halaman (tanpa
+   kedengeran, langsung di-pause lagi) — biar pas timer countdown abis,
+   lagu bisa langsung nyala tanpa nunggu klik kado dulu */
+function unlockAudioOnce(){
+  bgm.play().then(()=>{ bgm.pause(); bgm.currentTime = 0; }).catch(()=>{});
+  document.removeEventListener('click', unlockAudioOnce);
+  document.removeEventListener('touchstart', unlockAudioOnce);
+}
+document.addEventListener('click', unlockAudioOnce, { once:true });
+document.addEventListener('touchstart', unlockAudioOnce, { once:true });
+
 /* ---------------- navigasi antar layar ---------------- */
 const heartsBg = document.getElementById('heartsBg');
 function showScreen(id){
